@@ -24,6 +24,14 @@ Now, start a Training match on Enigma.
 
 The stage should now be made of either pink/purple crystals or greek columns.
 
+Now, exit Brawlhalla. Change the name of `examples/UI/force - My Custom UI` to `examples/UI/disable - My Custom UI`. 
+
+Double-click `batch_scripts/brawlhalla_shuffle.bat`
+
+Load Brawlhalla.
+
+If the script worked properly, your background should now feature either Diana or Koji, and the tile will all be returned to normal.
+
 
 ## Setup/Installation Instructions
 
