@@ -1,0 +1,47 @@
+{
+    "asset_dir": "./examples",
+    "brawlhalla_home": "C:/Program Files (x86)/Steam/steamapps/common/Brawlhalla",
+    "allow_defaults": false,
+    "sync_folders": [
+        "images/avatars",
+        "images/botw",
+        "images/chests",
+        "images/events",
+        "images/thumbnails",
+        "images/tiles",
+        "images/tilescreens",
+        "images/UI",
+        "mapArt/Backgrounds",
+        "mapArt/{map_name}",
+        "mp3"
+    ],
+    "included_maps": [
+        "BattleHill",
+        "Blackguard",
+        "Brawlball",
+        "Brawlhaven",
+        "Enigma",
+        "Fangwild",
+        "Fortress",
+        "GreatHall",
+        "Grove",
+        "Horde",
+        "KingsPass",
+        "LostLabyrinth",
+        "MiamiDome",
+        "ShipwreckFalls",
+        "Stadium",
+        "Temple",
+        "TitansEnd",
+        "TreeHouse",
+        "WarShuttle",
+        "UI"
+    ],
+    "excluded_maps": [
+        "Buddy",
+        "Test",
+        "Snow",
+        "Soccer",
+        "Tutorial"
+    ]
+}
