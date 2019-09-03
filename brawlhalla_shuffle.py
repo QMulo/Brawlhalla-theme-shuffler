@@ -112,11 +112,11 @@ class BrawlhallaShuffler:
             print("    - backing up {0}".format(os.path.join(map_name, subfolder, file)))
             backup_file = shutil.copy(old_asset, default_file)
 
-    def copy_assets(self, map_name, skin):
+    def copy_assets(self, theme_dir, skin):
         """
         Copy assets from map skin dir to Brawlhalla default asset dir
         """
-        skin_dir = os.path.join(self.asset_dir, map_name, skin)
+        skin_dir = os.path.join(self.asset_dir, theme_dir, skin)
 
         output = []
         sync_folders = self.sync_folders.copy()
@@ -139,9 +139,9 @@ class BrawlhallaShuffler:
                 old_asset = os.path.join(self.default_dir, folder_name, skin_file)
                 if os.path.exists(old_asset):
                     if skin != "default":
-                        self.backup_default(map_name, folder_name, skin_file)   
+                        self.backup_default(theme_dir, folder_name, skin_file)   
                     output.append(shutil.copy(new_asset, old_asset))
-        print("    - {0} overwritten; {1} files".format(map_name, len(output)))
+        print("    - {0} overwritten; {1} files".format(theme_dir, len(output)))
 
     def shuffle_assets(self, reset):
         """
