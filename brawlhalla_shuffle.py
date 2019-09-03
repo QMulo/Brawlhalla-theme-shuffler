@@ -28,6 +28,7 @@ class BrawlhallaShuffler:
 
         self.default_dir = self.config.get("brawlhalla_home")
         self.allow_defaults = self.config.get("allow_defaults", False)
+        self.reset_before_shuffle = self.config.get("reset_before_shuffle", True)
 
         self.included_maps = self.config.get("included_maps", [])
         self.excluded_maps = self.config.get("excluded_maps", [])
@@ -59,6 +60,7 @@ class BrawlhallaShuffler:
                 "defaults",
                 "Backgrounds",
             ) 
+            and os.path.isdir(os.path.join(self.asset_dir, x))
             and len(self.skin_choices(x)) > 0
             and x not in self.excluded_maps
         ]
@@ -73,10 +75,10 @@ class BrawlhallaShuffler:
 
         # Filter out default (unless allowed); filter out disabled
         available_choices = [
-            x for x in os.listdir(os.path.join(self.asset_dir, map_name))
-            if (
-                self.allow_defaults or not x == "default"
-            ) and not x.lower().startswith("disable")
+            x for x in os.listdir(os.path.join(self.asset_dir, map_name)) if 
+            os.path.isdir(os.path.join(self.asset_dir, map_name, x))
+            and (self.allow_defaults or not x == "default") 
+            and not x.lower().startswith("disable")
         ]
 
         # Whitelist
@@ -137,16 +139,26 @@ class BrawlhallaShuffler:
         print("    - {0} overwritten; {1} files".format(map_name, len(output)))
 
     def shuffle_assets(self, reset):
+        """
+        Main method for shuffling or resetting all assets
+        """
+        print("Shuffle Brawlhalla Themes")
+        print("")
         for map_name in self.map_choices():
             print(map_name)
-            skin_choice = "default" if args.r else self.select_skin(map_name)
-            print("  " + skin_choice)
-            self.copy_assets(map_name, skin_choice)
+            if reset or self.reset_before_shuffle:
+                self.reset_default(map_name)
+
+            if not reset:
+                skin_choice = self.select_skin(map_name)
+                print("  " + skin_choice)
+                self.copy_assets(map_name, skin_choice)
 
     def reset_default(self, map_name):
         """
         Reset all assets to original from backup defaults
         """
+        print("  Resetting to default")
         return self.copy_assets(map_name, "default")
 
 
@@ -156,7 +168,6 @@ if __name__ == "__main__":
     parser.add_argument('-r', action="store_true", default=False)
     args = parser.parse_args()
 
-    print(args)
     bh_shuffler = BrawlhallaShuffler()
     if args.d:
         bh_shuffler.allow_defaults = True

@@ -2,6 +2,7 @@
     "asset_dir": "./examples",
     "brawlhalla_home": "C:/Program Files (x86)/Steam/steamapps/common/Brawlhalla",
     "allow_defaults": false,
+    "reset_before_shuffle": true,
     "sync_folders": [
         "images/avatars",
         "images/botw",
