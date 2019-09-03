@@ -109,8 +109,8 @@ class BrawlhallaShuffler:
 
         if not os.path.exists(default_file):
             ensure_folder(default_file)
-            backup_file = shutil.copy(old_asset, default_file)
             print("    - backing up {0}".format(os.path.join(map_name, subfolder, file)))
+            backup_file = shutil.copy(old_asset, default_file)
 
     def copy_assets(self, map_name, skin):
         """
@@ -119,9 +119,14 @@ class BrawlhallaShuffler:
         skin_dir = os.path.join(self.asset_dir, map_name, skin)
 
         output = []
+        sync_folders = self.sync_folders.copy()
 
-        for subfolder in self.sync_folders:
-            folder_name = subfolder.format(map_name=map_name)
+        if "mapArt/{map_name}" in sync_folders and os.path.exists(os.path.join(skin_dir, "mapArt")):
+            for map_name in os.listdir(os.path.join(skin_dir, "mapArt")):
+                if map_name != "Backgrounds":
+                    sync_folders.append(os.path.join("mapArt", map_name))
+
+        for folder_name in sync_folders:
             skin_subfolder = os.path.join(skin_dir, folder_name)
 
             # Skip if folder not present
@@ -134,7 +139,7 @@ class BrawlhallaShuffler:
                 old_asset = os.path.join(self.default_dir, folder_name, skin_file)
                 if os.path.exists(old_asset):
                     if skin != "default":
-                        self.backup_default(map_name, folder_name, skin_file)
+                        self.backup_default(map_name, folder_name, skin_file)   
                     output.append(shutil.copy(new_asset, old_asset))
         print("    - {0} overwritten; {1} files".format(map_name, len(output)))
 
