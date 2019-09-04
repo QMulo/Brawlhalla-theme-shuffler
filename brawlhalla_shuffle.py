@@ -148,13 +148,18 @@ class BrawlhallaShuffler:
         Main method for shuffling or resetting all assets
         """
         print("Shuffle Brawlhalla Themes")
-        print("")
-        for map_name in self.map_choices():
-            print(map_name)
-            if reset or self.reset_before_shuffle:
+        map_choices = self.map_choices()
+
+        if reset or self.reset_before_shuffle:
+            print("")
+            print("  Resetting maps to default")
+            for map_name in map_choices:
                 self.reset_default(map_name)
 
-            if not reset:
+        if not reset:
+            print("")
+            for map_name in map_choices:
+                print(map_name)
                 skin_choice = self.select_skin(map_name)
                 print("  " + skin_choice)
                 self.copy_assets(map_name, skin_choice)
@@ -163,7 +168,7 @@ class BrawlhallaShuffler:
         """
         Reset all assets to original from backup defaults
         """
-        print("  Resetting to default")
+        print("  Resetting: {0}".format(map_name))
         return self.copy_assets(map_name, "default")
 
 
